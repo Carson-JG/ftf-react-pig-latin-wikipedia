@@ -1,36 +1,19 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { Layout } from "antd";
-import qs from "qs";
 
 import toPigLatin from "../../utils/toPigLatin";
+import getArticle from "../../utils/getArticle";
 
 export default () => {
   const [content, setContent] = useState("");
 
-  const getArticle = useCallback(async () => {
-    const { pathname: path } = window.location;
-    const wikiHost = "https://en.wikipedia.org/w/api.php";
-    const titles = path.split("/").pop();
-    const queryString = qs.stringify({
-      origin: "*",
-      format: "json",
-      action: "query",
-      prop: "extracts",
-      exlimit: "max",
-      explaintext: "",
-      titles,
-    });
-    const requestUrl = wikiHost + "?" + queryString;
-    const response = await window.fetch(requestUrl);
-    const { query } = await response.json();
-    const pages = Object.values(query.pages);
-    return pages[0].extract;
-  }, []);
+  const { pathname: path } = window.location;
 
   useEffect(() => {
-    getArticle().then(content =>
-      setContent(content.replace(/[a-z']+/gi, toPigLatin))
-    );
+    getArticle(path).then(article => {
+      const pigLatinArticle = article.replace(/[a-z']+/gi, toPigLatin);
+      setContent(pigLatinArticle);
+    });
   }, [setContent]);
 
   return (
