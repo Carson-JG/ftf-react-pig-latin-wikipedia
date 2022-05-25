@@ -2,29 +2,10 @@ import { useState, useEffect, useCallback } from "react";
 import { Layout } from "antd";
 import qs from "qs";
 
+import toPigLatin from "../../utils/toPigLatin";
+
 export default () => {
   const [content, setContent] = useState("");
-
-  function toPigLatin(word) {
-    const isVowel = char => "aeiou".includes(char.toLowerCase());
-    const isCap = char => char === char.toUpperCase();
-
-    const firstChar = word.charAt(0);
-    const vowelStart = isVowel(firstChar);
-    if (vowelStart) return word + "way";
-
-    const firstVowel = word.split("").find(isVowel);
-    const vowelIndex = word.indexOf(firstVowel) || 0;
-
-    const end = word.substring(vowelIndex).toLowerCase();
-    const start = word.substring(0, vowelIndex).toLowerCase();
-    const output = end + start + "ay";
-
-    const capStart = isCap(firstChar);
-    return capStart
-      ? output.replace(/[a-z]/i, char => char.toUpperCase())
-      : output;
-  }
 
   const getArticle = useCallback(async () => {
     const { pathname: path } = window.location;
@@ -41,16 +22,15 @@ export default () => {
     });
     const requestUrl = wikiHost + "?" + queryString;
     const response = await window.fetch(requestUrl);
-    const json = await response.json();
-    const pages = Object.values(json.query.pages);
+    const { query } = await response.json();
+    const pages = Object.values(query.pages);
     return pages[0].extract;
   }, []);
 
   useEffect(() => {
-    getArticle().then(content => {
-      content = content.replace(/[a-z']+/gi, toPigLatin);
-      setContent(content);
-    });
+    getArticle().then(content =>
+      setContent(content.replace(/[a-z']+/gi, toPigLatin))
+    );
   }, [setContent]);
 
   return (
