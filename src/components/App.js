@@ -6,9 +6,7 @@ import Layout from "./layout";
 
 const App = () => (
   <StrictMode>
-    <div id="app">
-      <Layout />
-    </div>
+    <Layout />
   </StrictMode>
 );
 
