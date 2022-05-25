@@ -1,5 +1,3 @@
-import { BrowserRouter } from "react-router-dom";
-
 import { Layout } from "antd";
 
 import Header from "./Header";
@@ -10,11 +8,9 @@ export default ({ navigation }) => {
   const layoutStyle = { minHeight: "100vh" };
   return (
     <Layout style={layoutStyle}>
-      <BrowserRouter>
-        <Header navigation={navigation} />
-        <Content />
-        <Footer />
-      </BrowserRouter>
+      <Header navigation={navigation} />
+      <Content />
+      <Footer />
     </Layout>
   );
 };

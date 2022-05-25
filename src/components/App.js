@@ -6,12 +6,10 @@ import "../assets/style.css";
 
 import Layout from "./layout";
 
-import { NAVIGATION } from "../config";
-
 const App = () => (
   <StrictMode>
     <div id="app">
-      <Layout navigation={NAVIGATION} />
+      <Layout />
     </div>
   </StrictMode>
 );

@@ -1,7 +1,4 @@
-import { Switch, Route } from "react-router-dom";
 import { Layout } from "antd";
-
-import { Root, PageOne } from "../pages";
 
 export default ({}) => {
   return (
@@ -13,14 +10,7 @@ export default ({}) => {
           background: "#fff",
         }}
       >
-        <Switch>
-          <Route path="/page-1">
-            <PageOne />
-          </Route>
-          <Route path="/">
-            <Root />
-          </Route>
-        </Switch>
+        Content
       </div>
     </Layout.Content>
   );
