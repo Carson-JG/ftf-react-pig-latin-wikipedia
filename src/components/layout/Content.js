@@ -5,26 +5,25 @@ import qs from "qs";
 export default () => {
   const [content, setContent] = useState("");
 
-  function translatePigLatin(word) {
+  function toPigLatin(word) {
     const isVowel = char => "aeiou".includes(char.toLowerCase());
     const isCap = char => char === char.toUpperCase();
 
-    const chars = word.split("");
-    const [firstChar] = chars;
+    const firstChar = word.charAt(0);
     const vowelStart = isVowel(firstChar);
-
     if (vowelStart) return word + "way";
 
-    const firstVowel = chars.find(isVowel);
+    const firstVowel = word.split("").find(isVowel);
     const vowelIndex = word.indexOf(firstVowel) || 0;
 
-    const capStart = isCap(firstChar);
-    let end = word.substring(vowelIndex).toLowerCase();
-    if (capStart) {
-      end = end.replace(/[a-z]/i, char => char.toUpperCase());
-    }
+    const end = word.substring(vowelIndex).toLowerCase();
     const start = word.substring(0, vowelIndex).toLowerCase();
-    return end + start + "ay";
+    const output = end + start + "ay";
+
+    const capStart = isCap(firstChar);
+    return capStart
+      ? output.replace(/[a-z]/i, char => char.toUpperCase())
+      : output;
   }
 
   const getArticle = useCallback(async () => {
@@ -49,7 +48,7 @@ export default () => {
 
   useEffect(() => {
     getArticle().then(content => {
-      content = content.replace(/[a-z']+/gi, translatePigLatin);
+      content = content.replace(/[a-z']+/gi, toPigLatin);
       setContent(content);
     });
   }, [setContent]);
