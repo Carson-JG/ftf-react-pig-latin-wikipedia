@@ -1,8 +1,7 @@
 {
-  "name": "react-starter-antd",
+  "name": "react-pig-latin-wikipedia",
   "version": "0.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "React app for translating Wikipedia to Pig Latin.",
   "scripts": {
     "format": "prettier --write \"./**/*.{js,jsx,json,html,htm,css,babelrc,prettierrc}\"",
     "lint": "eslint \"src/**/*.{js,jsx}\" --quiet",
@@ -34,6 +33,7 @@
     "react-router-dom": "^5.2.0"
   },
   "browserslist": [
-    "last 2 chrome versions"
+    "last 2 versions",
+    "not dead"
   ]
 }
