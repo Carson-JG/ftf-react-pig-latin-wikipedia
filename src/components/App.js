@@ -1,8 +1,6 @@
 import { StrictMode } from "react";
 import ReactDOM from "react-dom";
-
 import "antd/dist/antd.css";
-import "../assets/style.css";
 
 import Layout from "./layout";
 
